@@ -5,14 +5,14 @@ const API_KEY = "c72aff27bf6996cb9444fd335d20d27b";
 const BASE_URL = "https://gnews.io/api/v4";
 
 const CATEGORIES = [
-  { id: "india",         label: "🇮🇳 India",       query: "india", type: "search" },
-  { id: "world",         label: "🌍 World",         query: null,    type: "world" },
-  { id: "technology",    label: "💻 Technology",    query: null,    type: "category" },
-  { id: "business",      label: "💼 Business",      query: null,    type: "category" },
-  { id: "sports",        label: "🏏 Sports",        query: null,    type: "category" },
-  { id: "entertainment", label: "🎬 Entertainment", query: null,    type: "category" },
-  { id: "health",        label: "🏥 Health",        query: null,    type: "category" },
-  { id: "science",       label: "🔬 Science",       query: null,    type: "category" },
+  { id: "india", label: "🇮🇳 India", query: "india", type: "search" },
+  { id: "world", label: "🌍 World", query: null, type: "world" },
+  { id: "technology", label: "💻 Technology", query: null, type: "category" },
+  { id: "business", label: "💼 Business", query: null, type: "category" },
+  { id: "sports", label: "🏏 Sports", query: null, type: "category" },
+  { id: "entertainment", label: "🎬 Entertainment", query: null, type: "category" },
+  { id: "health", label: "🏥 Health", query: null, type: "category" },
+  { id: "science", label: "🔬 Science", query: null, type: "category" },
 ];
 
 export default function App() {
@@ -20,8 +20,10 @@ export default function App() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+
   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0]);
   const [darkMode, setDarkMode] = useState(true);
 
@@ -42,29 +44,31 @@ export default function App() {
       let url;
 
       if (searchQuery) {
-        url = `${BASE_URL}/search?q=${encodeURIComponent(searchQuery)}&lang=en&max=24&apikey=${API_KEY}`;
+        url = `${BASE_URL}/search?q=${encodeURIComponent(searchQuery)}&lang=en&max=24&token=${API_KEY}`;
       }
 
       else if (activeCategory.type === "search") {
-        url = `${BASE_URL}/search?q=${activeCategory.query}&lang=en&max=24&apikey=${API_KEY}`;
+        url = `${BASE_URL}/search?q=${activeCategory.query}&lang=en&max=24&token=${API_KEY}`;
       }
 
       else if (activeCategory.type === "world") {
-        url = `${BASE_URL}/top-headlines?lang=en&max=24&apikey=${API_KEY}`;
+        url = `${BASE_URL}/top-headlines?lang=en&max=24&token=${API_KEY}`;
       }
 
       else {
-        url = `${BASE_URL}/top-headlines?category=${activeCategory.id}&lang=en&max=24&apikey=${API_KEY}`;
+        url = `${BASE_URL}/top-headlines?category=${activeCategory.id}&lang=en&max=24&token=${API_KEY}`;
       }
 
-      const res = await fetch(url);
-      const data = await res.json();
+      const response = await fetch(url);
+      const data = await response.json();
 
       if (!data.articles) throw new Error("Failed to fetch news");
 
-      const valid = data.articles.filter(a => a.title && a.image);
+      const validArticles = data.articles.filter(
+        a => a.title && a.image
+      );
 
-      setArticles(valid);
+      setArticles(validArticles);
 
     } catch (err) {
 
@@ -134,31 +138,28 @@ export default function App() {
 
       <nav className="navbar">
 
-        <div className="nav-left">
-
-          <div className="logo">
-            <span className="logo-icon">📰</span>
-            <span className="logo-text">News<span className="logo-accent">Flow</span></span>
-          </div>
-
+        <div className="logo">
+          📰 News<span className="logo-accent">Flow</span>
         </div>
 
         <form className="search-form" onSubmit={handleSearch}>
-
           <input
             type="text"
-            placeholder="Search any topic..."
+            placeholder="Search news..."
             value={searchInput}
-            onChange={e => setSearchInput(e.target.value)}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="search-input"
           />
 
           {searchQuery && (
-            <button type="button" className="clear-btn" onClick={clearSearch}>✕</button>
+            <button type="button" className="clear-btn" onClick={clearSearch}>
+              ✕
+            </button>
           )}
 
-          <button type="submit" className="search-btn">🔍</button>
-
+          <button type="submit" className="search-btn">
+            🔍
+          </button>
         </form>
 
         <div className="nav-right">
@@ -177,7 +178,10 @@ export default function App() {
             🔖 Saved {bookmarks.length > 0 && <span className="badge">{bookmarks.length}</span>}
           </button>
 
-          <button className="theme-toggle" onClick={() => setDarkMode(d => !d)}>
+          <button
+            className="theme-toggle"
+            onClick={() => setDarkMode(d => !d)}
+          >
             {darkMode ? "☀️" : "🌙"}
           </button>
 
@@ -207,20 +211,10 @@ export default function App() {
 
       <main className="main">
 
-        <div className="page-header">
-
-          <h1 className="page-title">{pageTitle()}</h1>
-
-          {activeTab !== "bookmarks" && !loading && (
-            <span className="article-count">{displayArticles.length} articles</span>
-          )}
-
-        </div>
+        <h1 className="page-title">{pageTitle()}</h1>
 
         {loading && (
-          <div className="loading">
-            <p>Fetching latest news...</p>
-          </div>
+          <p>Fetching latest news...</p>
         )}
 
         {error && (
@@ -252,7 +246,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <p>Powered by GNews · Built with React</p>
+        Powered by GNews • Built with React
       </footer>
 
     </div>
@@ -261,39 +255,17 @@ export default function App() {
 
 function ArticleCard({ article, bookmarked, onBookmark }) {
 
-  const date = new Date(article.publishedAt).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  });
+  const date = new Date(article.publishedAt).toLocaleDateString("en-IN");
 
   return (
 
     <div className="card">
 
-      <div className="card-img-wrap">
-
-        <img
-          src={article.image}
-          alt={article.title}
-          className="card-img"
-          onError={e => {
-            e.target.src = "https://placehold.co/400x220/13131a/7a7a8c?text=No+Image";
-          }}
-        />
-
-        <button
-          className={`bookmark-btn ${bookmarked ? "bookmarked" : ""}`}
-          onClick={onBookmark}
-        >
-          {bookmarked ? "🔖" : "🏷️"}
-        </button>
-
-        {article.source?.name && (
-          <span className="source-badge">{article.source.name}</span>
-        )}
-
-      </div>
+      <img
+        src={article.image}
+        alt={article.title}
+        className="card-img"
+      />
 
       <div className="card-body">
 
@@ -313,6 +285,13 @@ function ArticleCard({ article, bookmarked, onBookmark }) {
         >
           Read Full Article →
         </a>
+
+        <button
+          className="bookmark-btn"
+          onClick={onBookmark}
+        >
+          {bookmarked ? "🔖" : "🏷️"}
+        </button>
 
       </div>
 
