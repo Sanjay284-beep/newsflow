@@ -12,6 +12,8 @@
   --muted: #7a7a8c;
   --accent: #c8f04d;
   --card-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --skeleton-base: #1e1e2e;
+  --skeleton-shine: #2a2a3e;
 }
 .app.light {
   --bg: #f4f4f8;
@@ -22,6 +24,8 @@
   --muted: #6b6b7a;
   --accent: #5a9e00;
   --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --skeleton-base: #e0e0e8;
+  --skeleton-shine: #f0f0f5;
 }
 
 body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; }
@@ -338,3 +342,64 @@ body.light { background: #f4f4f8; }
   transition: color 0.2s;
 }
 .clear-btn:hover { color: var(--accent); }
+/* ===== SKELETON LOADER ===== */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base) 25%,
+    var(--skeleton-shine) 50%,
+    var(--skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+  pointer-events: none;
+}
+
+.skeleton-img {
+  width: 100%;
+  height: 220px;
+  border-radius: 12px 12px 0 0;
+}
+
+.skeleton-date {
+  width: 80px;
+  height: 12px;
+  margin-bottom: 10px;
+}
+
+.skeleton-title {
+  width: 100%;
+  height: 16px;
+  margin-bottom: 8px;
+}
+
+.skeleton-title.short {
+  width: 70%;
+}
+
+.skeleton-desc {
+  width: 100%;
+  height: 13px;
+  margin-bottom: 6px;
+}
+
+.skeleton-desc.short {
+  width: 85%;
+  margin-bottom: 14px;
+}
+
+.skeleton-btn {
+  width: 140px;
+  height: 36px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
