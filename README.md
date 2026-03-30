@@ -2,130 +2,111 @@
 
 ### Modern React News Aggregator
 
-A modern and responsive **news aggregator web application** built using
-**React** and **NewsAPI**.\
-It delivers **real-time global news**, category filtering, bookmarking,
-and dark/light mode.
+A modern and responsive **news aggregator web application** built using **React** and **GNews API**.
+It delivers **real-time global news**, category filtering, bookmarking, and dark/light mode.
 
-------------------------------------------------------------------------
+🌐 **Live Demo** → [newsflow-tan.vercel.app](https://newsflow-tan.vercel.app)
 
-# 🚀 Live Demo
+---
 
-Run the project locally:
+## ✨ Features
 
-``` bash
-npm start
+- 🇮🇳 **India News** — Top headlines from Indian sources
+- 🌍 **World News** — BBC, CNN, Reuters, Al Jazeera
+- 💻 **Categories** — Technology, Business, Sports, Entertainment, Health, Science
+- 🔍 **Global Search** — Search any topic, person, or event
+- 🔖 **Bookmarks** — Save articles using localStorage
+- 🌙 **Dark / Light Mode** — Toggle between themes
+- ⚡ **Skeleton Loaders** — Smooth loading experience
+- 📱 **Fully Responsive** — Works on all screen sizes
+
+---
+
+## 🛠 Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| React 18 | UI Framework |
+| Custom Hooks | Reusable fetch logic |
+| GNews API | Real-time news data |
+| CSS3 | Styling & animations |
+| localStorage | Bookmark storage |
+| Vercel | Deployment & serverless API |
+
+---
+
+## 📁 Project Structure
+```
+newsflow
+├── api
+│   └── news.js          ← Vercel serverless proxy (hides API key)
+├── public
+│   └── index.html
+├── src
+│   ├── components
+│   │   ├── Navbar.js
+│   │   ├── CategoryBar.js
+│   │   ├── ArticleCard.js
+│   │   └── SkeletonCard.js
+│   ├── hooks
+│   │   └── useNews.js   ← custom hook for fetching news
+│   ├── App.js
+│   ├── App.css
+│   └── index.js
+├── .env                 ← API key (not committed)
+├── package.json
+└── README.md
 ```
 
-Application opens at:
+---
 
-http://localhost:3000
+## 📦 Installation & Setup
 
-------------------------------------------------------------------------
-
-# ✨ Features
-
-✔ **India News** --- Top headlines from Indian sources\
-✔ **World News** --- BBC, CNN, Reuters, Al Jazeera
-
-✔ **Categories** - Technology - Business - Sports - Entertainment -
-Health - Science
-
-✔ **Global Search** --- Search any topic across sources\
-✔ **Bookmarks** --- Saved using localStorage\
-✔ **Dark / Light Mode**\
-✔ **Fully Responsive**
-
-------------------------------------------------------------------------
-
-# 🛠 Tech Stack
-
-  Technology     Purpose
-  -------------- ------------------
-  React 18       UI Framework
-  React Hooks    State Management
-  NewsAPI        News Data
-  CSS3           Styling
-  localStorage   Bookmark Storage
-
-------------------------------------------------------------------------
-
-# 📦 Installation
-
-## Clone Repository
-
-``` bash
-git clone https://github.com/yourusername/newsflow.git
-```
-
-## Enter Folder
-
-``` bash
+### 1. Clone the repository
+```bash
+git clone https://github.com/Sanjay284-beep/newsflow.git
 cd newsflow
 ```
 
-## Install Dependencies
-
-``` bash
+### 2. Install dependencies
+```bash
 npm install
 ```
 
-## Add API Key
-
-Open:
-
-    src/App.js
-
-Replace:
-
-``` javascript
-const API_KEY = "your_newsapi_key_here";
+### 3. Create a `.env` file in the root folder
 ```
+REACT_APP_NEWS_API_KEY=your_gnews_api_key_here
+```
+Get your free API key → [gnews.io](https://gnews.io)
 
-Get API key → https://newsapi.org
-
-------------------------------------------------------------------------
-
-# ▶ Run Project
-
-``` bash
+### 4. Start the app
+```bash
 npm start
 ```
 
-------------------------------------------------------------------------
+App opens at → `http://localhost:3000`
 
-# 📁 Project Structure
+---
 
-    newsflow
-    ├── public
-    │   └── index.html
-    ├── src
-    │   ├── App.js
-    │   ├── App.css
-    │   └── index.js
-    ├── package.json
-    └── README.md
+## 🎯 React Concepts Used
 
-------------------------------------------------------------------------
+- `useState` — managing UI state
+- `useEffect` — side effects & syncing
+- `useCallback` — memoizing fetch function
+- `Custom Hook (useNews)` — separating fetch logic
+- `Props` — passing data between components
+- `Conditional Rendering` — loading, error, empty states
+- `localStorage` — persisting bookmarks
 
-# 🎯 React Concepts
+---
 
--   useState
--   useEffect
--   useCallback
--   Props
--   Conditional Rendering
--   localStorage
+## 👨‍💻 Author
 
-------------------------------------------------------------------------
-
-# 👨‍💻 Author
-
-**Sanjay**\
+**Sanjay**
 Frontend Developer
 
-------------------------------------------------------------------------
+---
 
-# 📄 License
+## 📄 License
 
 MIT License
